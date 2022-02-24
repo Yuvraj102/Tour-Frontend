@@ -1,0 +1,67 @@
+// this header is gonna be on each page for example if out website expands
+// so this part goes under layouts
+
+.header {
+  height: 85vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/hero.jpg); /*linear-gradient is for the green overlay*/
+  background-size: cover; /*try to fit the element inside the box*/
+  background-position: top; /*chop off the bottom part of the image if screen resized and not the top part */
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 75vh,
+    0 100%
+  ); /*to have the header with shear sort of effect :ploygon(x y , x y ) each x,y point represents the corner*/
+  position: relative;
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 75vh,
+      0 100%
+    ); /*to have the header with shear sort of effect :ploygon(x y , x y ) each x,y point represents the corner*/
+    height: 95vh;
+  }
+  // dots per inch is a high resolution screen like apple retina, 'and' is like &&, ',' comma is like OR(||)
+  // 125em = 2000px
+  //-webkit-min-device-pixel-ratio is safari equivalent if min-resolution
+  @media (min-resolution: 192dpi) and (min-width: 600px),
+    (-webkit-min-device-pixel-ratio: 2) and (min-width: 600px),
+    (min-width: 125em) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.8),
+        rgba($color-primary-dark, 0.8)
+      ),
+      url(../img/hero.jpg);
+  }
+
+  @include respond(phone) {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+  //&__logo-box = .header__logo-box
+  &__logo-box {
+    position: absolute; /*it will refer according to parent element which has its poition set to relative*/
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &__logo {
+    height: 3.5rem;
+  }
+  &__text-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}

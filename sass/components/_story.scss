@@ -1,0 +1,82 @@
+.story {
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  background-color: rgba($color-white, 0.6);
+  border-radius: 3px;
+  padding: 6rem;
+  padding-left: 9rem;
+  font-size: $default-font-size; //p tag will inherit this
+  transform: skewX(-12deg);
+
+  @include respond(tab-port) {
+    width: 100%;
+    padding: 4rem;
+    padding-left: 7rem;
+  }
+  @include respond(phone) {
+    transform: skewX(0);
+  }
+  &__shape {
+    width: 15rem;
+    height: 15rem;
+
+    float: left; //shape-outside will work only if element is floated & has to have a height and width
+    // percentage inside the circle will be relative to width/height to current element i.e __shape, 50% be 7.5rem
+
+    transform: translateX(-3rem) skewX(12deg);
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+      -webkit-clip-path: circle(50% at 50% 50%);
+      clip-path: circle(50% at 50% 50%);
+      -webkit-shape-outside: circle(50% at 50% 50%);
+      // shape
+      shape-outside: circle(
+        50% at 50% 50%
+      ); // inside circle define size(radius) of the circle and the position of the center of the circle
+      // the surrounding element will wrap around it like this element is circle, we have to clip the extra parts
+      border-radius: none;
+    }
+    @include respond(phone) {
+      transform: translateX(-3rem) skewX(0);
+    }
+  }
+  &__img {
+    height: 100%; //width relative to parent
+    transform: translateX(-4rem) scale(1.4); //so that we have proper part of image visible
+    backface-visibility: hidden;
+    transition: all 0.5s;
+  }
+  &__text {
+    transform: skewX(12deg);
+    @include respond(phone) {
+      transform: skewX(0);
+    }
+  }
+  &__caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(
+      -50%,
+      20%
+    ); //move down in Y-axis (initial animation state)
+    color: $color-white;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    text-align: center; //horizontal alignment
+    opacity: 0;
+    transition: all 0.5s;
+    backface-visibility: hidden; //fix small glitch
+  }
+  &:hover &__caption {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  &:hover &__img {
+    transform: translateX(-4rem) scale(1);
+    filter: blur(3px) brightness(80%);
+  }
+}

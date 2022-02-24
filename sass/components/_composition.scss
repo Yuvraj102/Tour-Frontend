@@ -1,0 +1,58 @@
+.composition {
+  position: relative;
+
+  &__photo {
+    width: 55%; // image related so specify in % and not rem etc cause in future it will adopt to screen size changes without any media queries
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.4);
+    // border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+    transition: all 0.2s;
+    outline-offset: 2rem; //The outline-offset property adds space between the outline and the edge or border of an element.
+
+    @include respond(tab-port) {
+      float: left;
+      position: relative;
+      width: 33.33333%;
+      box-shadow: 0 1.5rem 4rem rgba($color-black, 0.2);
+    }
+    &--p1 {
+      // & represents the current address
+      left: 0;
+      top: -2rem; //will move it upwards, because its higher than the text
+      @include respond(tab-port) {
+        top: 0;
+        transform: scale(1.2);
+      }
+    }
+    &--p2 {
+      right: 0;
+      top: 2rem;
+      @include respond(tab-port) {
+        top: -1rem;
+        transform: scale(1.3);
+        z-index: 100;
+      }
+    }
+    &--p3 {
+      left: 20%;
+      top: 10rem;
+      @include respond(tab-port) {
+        top: 1rem;
+        left: 0;
+        transform: scale(1.1);
+      }
+    }
+    &:hover {
+      outline: 1.5rem solid $color-primary; //outline is similar to border, but with outline we can set it's offset
+      transform: scale(1.05) translateY(-0.5rem);
+      box-shadow: 0 2.5rem 4rem rgba($color-black, 0.5);
+      z-index: 20; //highest z index, so will be displayed on top
+    }
+  }
+  //   what below selector says is, whenever we hover over the .composition select the photo that is not being hovered
+  &:hover &__photo:not(:hover) {
+    transform: scale(0.95);
+    // this will give an effect when other images are hovered the images not being hovered will shrink a bit.
+  }
+}

@@ -1,0 +1,97 @@
+.form {
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+  &__input {
+    font-size: 1.5rem;
+    font-family: inherit; //by default input elements to implicity inherit, so make it do that
+    color: inherit;
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: rgba($color-white, 0.5);
+    border: none;
+    border-bottom: 3px solid transparent;
+    width: 90%;
+    display: block;
+    transition: all 0.3s;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-2;
+    }
+    &:focus:invalid {
+      // run when it's focused and invalid
+      border-bottom: 3px solid $color-secondary-dark;
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+      border-bottom: 3px solid $color-primary;
+    }
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 2rem;
+    margin-top: 0.7rem;
+    display: block;
+    transition: all 0.3s;
+  }
+  &__input:placeholder-shown + &__label {
+    //   + because input and label are siblings and label is not child of input
+    // + adjacent sibling , means we select the first sibling that comes after if there is some other elements in between we can use `~` general sibling selector
+    //   placeholder is a text that is shown when the input is empty,this applies when the placeholder is shown it vanishes when the user starts typing
+    opacity: 0; //this will just make it invisible
+    visibility: hidden; //element will be gone, we cannot animate visibility
+    transform: translateY(-4rem);
+  }
+  &__radio-group {
+    width: 49%;
+    display: inline-block; //will be displayed side by side
+    @include respond(tab-port) {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+  &__radio-input {
+    display: none;
+  }
+  &__radio-label {
+    font-size: $default-font-size;
+    cursor: pointer;
+    position: relative;
+    padding-left: 4.5rem;
+  }
+  &__radio-button {
+    height: 3rem;
+    width: 3rem;
+    border: 5px solid $color-primary;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: -0.4rem;
+    &::after {
+      content: "";
+      display: block;
+      height: 1.3rem;
+      width: 1.3rem;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: $color-primary;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+  // ~ because __radio-input is a sibling of __radio-label and not child
+  &__radio-input:checked ~ &__radio-label &__radio-button::after {
+    opacity: 1;
+  }
+}

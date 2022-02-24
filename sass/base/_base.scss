@@ -1,0 +1,43 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; /*box-sizing properties are not inherited by default*/
+}
+html {
+  // this defines what 1rem is !!
+  font-size: 62.5%; /*default font size is 16px so 100% of 16px is 16px;  1rem = 10px*/
+
+  // passing @content
+  // @include respond-phone {
+  //   font-size: 50%; //content{} we pass inside mixin, You can pass entire block of styling
+  // }
+
+  // larger to smaller :is the order of media query
+  @include respond(tab-land) {
+    //width < 900?
+    font-size: 56.25%; //1rem = 9px
+  }
+  @include respond(tab-port) {
+    //width < 600?
+    font-size: 50%; //1rem = 8px
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; //1rem = 12px
+  }
+}
+
+body {
+  box-sizing: border-box;
+  padding: 3rem;
+  @include respond(tab-port) {
+    padding: 0;
+  }
+}
+
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}
